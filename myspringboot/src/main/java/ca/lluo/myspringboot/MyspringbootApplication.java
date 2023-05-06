@@ -9,7 +9,7 @@ public class MyspringbootApplication {
 
 	public static void main(String[] args) {
 		java.lang.System.out.println("------------------ my main() ---------------------");
-		SpringApplication.run(MyspringbootApplication.class, args);
+		SpringApplication.run(MyspringbootApplication.class, args); 
 	}
 
 }
