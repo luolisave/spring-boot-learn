@@ -19,12 +19,7 @@
           <th>Subject</th>
           <th>Score</th>
         </tr>
-        <tr th:each="grade: ${grades}">
-          <td th:text="${grade.name}"></td>
-          <td th:text="${grade.subject}"></td>
-          <td th:text="${grade.score}"></td>
-      </tr>
-        <!-- <tr>
+        <tr>
             <td th:text="${grade.name}"></td>
             <td th:text="${grade.subject}"></td>
             <td th:text="${grade.score}"></td>
@@ -33,7 +28,7 @@
             <td><span th:text="*{name}"></span> ?? second ??</td>
             <td th:text="*{subject}"></td>
             <td th:text="*{score}"></td>
-        </tr> -->
+        </tr>
       </table>
     </div>
 
