@@ -5,17 +5,18 @@ import java.util.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.thymeleaf.engine.AttributeName;
 
 @Controller
 public class GradeController {
 
-    // List<Grade> studentGrades = new ArrayList<>();
-    List<Grade> studentGrades = Arrays.asList(
-        new Grade( "Harry" ,  "Potion", "C+"),
-        new Grade( "Jam" ,  "Arithmany", "B+"),
-        new Grade( "Lucy" ,  "IT", "A-")
-    );
+    List<Grade> studentGrades = new ArrayList<>();
+    // List<Grade> studentGrades = Arrays.asList(
+    //     new Grade( "Harry" ,  "Potion", "C+"),
+    //     new Grade( "Jam" ,  "Arithmany", "B+"),
+    //     new Grade( "Lucy" ,  "IT", "A-")
+    // );
 
     @GetMapping("/grades")
     public String getGrades(Model model) {
@@ -23,8 +24,21 @@ public class GradeController {
         return "grades";
     }
 
+    @GetMapping("/")
+    public String gradeForm(Model model) {
+        model.addAttribute("grade", new Grade());
+        return "form";
+    }
+
+    @PostMapping("/handleSubmit")
+    public String submitGrade(Grade grade) {
+        System.out.println("{ name = " + grade.getName() + " , subject=" + grade.getSubject() + "   }");
+        studentGrades.add(grade);
+        return "redirect:/grades";
+    }
+
     @GetMapping("/hello")
-    public String SayHello() {
+    public String SayHello(Model model) {
         String SomeStr = "SayHello()";
         return "helloview";
     }
@@ -32,7 +46,7 @@ public class GradeController {
     @GetMapping("/test")
     public String getTest(Model model) {
         Grade grade = new Grade( "Harry" ,  "Potion", "C+");
-        model.addAttribute("grade", grade);
+        model.addAttribute("grade", grade.getName());
         model.addAttribute("sales", 150);
         return "test";
     }
