@@ -1,7 +1,6 @@
 package ca.lluo.myspringboot;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.actuate.autoconfigure.metrics.MetricsProperties.System;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication

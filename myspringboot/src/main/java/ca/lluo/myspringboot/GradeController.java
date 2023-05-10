@@ -1,12 +1,13 @@
 package ca.lluo.myspringboot;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.thymeleaf.engine.AttributeName;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class GradeController {
@@ -18,24 +19,37 @@ public class GradeController {
     //     new Grade( "Lucy" ,  "IT", "A-")
     // );
 
+    @GetMapping("/")
+    public String getForm(Model model, @RequestParam(required = false) String id) {
+        int index = getGradeIndex(id);
+        model.addAttribute("grade", index == Constants.NOT_FOUND ? new Grade() : studentGrades.get(index));
+        return "form";
+    }
+
+    @PostMapping("/handleSubmit")
+    public String submitForm(Grade grade) {
+        int index = getGradeIndex(grade.getId());
+        if (index == Constants.NOT_FOUND) {
+            studentGrades.add(grade);
+        } else {
+            studentGrades.set(index, grade);
+        }
+        return "redirect:/grades";
+    }
+
     @GetMapping("/grades")
     public String getGrades(Model model) {
         model.addAttribute("grades", studentGrades);
         return "grades";
     }
 
-    @GetMapping("/")
-    public String gradeForm(Model model) {
-        model.addAttribute("grade", new Grade());
-        return "form";
+    public int getGradeIndex(String id) {
+        for (int i = 0; i < studentGrades.size(); i++) {
+            if (studentGrades.get(i).getId().equals(id)) return i;
+        }
+        return Constants.NOT_FOUND;
     }
 
-    @PostMapping("/handleSubmit")
-    public String submitGrade(Grade grade) {
-        System.out.println("{ name = " + grade.getName() + " , subject=" + grade.getSubject() + "   }");
-        studentGrades.add(grade);
-        return "redirect:/grades";
-    }
 
     @GetMapping("/hello")
     public String SayHello(Model model) {
@@ -45,9 +59,8 @@ public class GradeController {
 
     @GetMapping("/test")
     public String getTest(Model model) {
-        Grade grade = new Grade( "Harry" ,  "Potion", "C+");
-        model.addAttribute("grade", grade.getName());
         model.addAttribute("sales", 150);
         return "test";
     }
+
 }
