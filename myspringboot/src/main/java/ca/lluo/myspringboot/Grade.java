@@ -2,7 +2,10 @@ package ca.lluo.myspringboot;
 
 import java.util.UUID;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class Grade {
+    @NotBlank(message = "Name cannot be empty!")
     private String name;
     private String subject;
     private String score;
